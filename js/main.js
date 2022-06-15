@@ -10,3 +10,6 @@ function getRandomPositiveInteger (a, b) {
 function checkStringLength (value, maxLength) {
   return value.length <= maxLength;
 }
+
+getRandomPositiveInteger (10, 15);
+checkStringLength ('Кекс', 100);
