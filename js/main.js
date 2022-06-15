@@ -1,11 +1,12 @@
-function getRandomInteger(min, max) {
-  // случайное число от min до (max+1)
-  const rand = min + Math.random() * (max + 1 - min);
-  return Math.floor(rand);
+// Источник - функцию принес Кекс
+function getRandomPositiveInteger (a, b) {
+  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
 }
-// Источник https://learn.javascript.ru/task/random-int-min-max
 
 
-function checkStringLength(value, maxLength) {
+function checkStringLength (value, maxLength) {
   return value.length <= maxLength;
 }
