@@ -1,5 +1,3 @@
-const excludeNumbers = [];
-
 // проверяет длину строки
 const checkStringLength = (value, maxLength) => value.length <= maxLength;
 
@@ -14,14 +12,20 @@ const getRandomPositiveInteger = (a, b) => {
 // получает случайный элемент массива
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-// получает случайное уникальное число
-const getRandomUniqueId = (maxNumber) => {
-  let uniqueId = getRandomPositiveInteger(1, maxNumber);
-  while (excludeNumbers.includes(uniqueId)) {
-    uniqueId = getRandomPositiveInteger(1, maxNumber);
-  }
-  excludeNumbers.push(uniqueId);
-  return uniqueId;
-};
+// получает случайное уникальное число из диапазона
+const createRandomIdFromRangeGenerator = (minNumber, maxNumber) => {
+  const excludeNumbers = [];
+  return () => {
+    let uniqueId = getRandomPositiveInteger(minNumber, maxNumber);
+    if (excludeNumbers.length >= (maxNumber - minNumber + 1)) {
+      return null;
+    }
+    while (excludeNumbers.includes(uniqueId)) {
+      uniqueId = getRandomPositiveInteger(minNumber, maxNumber);
+    }
+    excludeNumbers.push(uniqueId);
+    return uniqueId;
+  };
+}
 
-export {checkStringLength, getRandomPositiveInteger, getRandomArrayElement, getRandomUniqueId};
+export {checkStringLength, getRandomPositiveInteger, getRandomArrayElement, createRandomIdFromRangeGenerator};
