@@ -32,8 +32,8 @@ const createPhotoDescriptionGenerator = () => {
       description: `Описание фотографии номер ${photoId}`,
       likes: getRandomPositiveInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
       comments: createPhotoComments(),
-    }
-  }
+    };
+  };
 };
 
 // создаёт массив описания фотографий

@@ -26,6 +26,6 @@ const createRandomIdFromRangeGenerator = (minNumber, maxNumber) => {
     excludeNumbers.push(uniqueId);
     return uniqueId;
   };
-}
+};
 
 export {checkStringLength, getRandomPositiveInteger, getRandomArrayElement, createRandomIdFromRangeGenerator};
