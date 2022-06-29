@@ -1,5 +1,6 @@
 export const PHOTOS_COUNT = 25;
 export const MAX_COMMENTS_COUNT = 3;
+export const MIN_RANGE_RANDOM_ID_COMMENT = 1;
 export const MAX_RANGE_RANDOM_ID_COMMENT = 1000;
 export const MIN_LIKES_COUNT = 15;
 export const MAX_LIKES_COUNT = 200;
