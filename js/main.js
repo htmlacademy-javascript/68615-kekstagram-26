@@ -1,4 +1,6 @@
 import {PHOTOS_COUNT} from './const.js';
 import {createArrayDescriptions} from './data.js';
+import {renderThumbnails} from './thumbnail-rendering.js';
 
-createArrayDescriptions(PHOTOS_COUNT);
+const photosData = createArrayDescriptions(PHOTOS_COUNT);
+renderThumbnails(photosData);
