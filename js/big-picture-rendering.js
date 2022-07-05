@@ -1,3 +1,5 @@
+import {isEscapeKey} from './util.js';
+
 const bodyElement = document.querySelector('body');
 const modalWindowElement = document.querySelector('.big-picture');
 const listElement = modalWindowElement.querySelector('.social__comments');
@@ -8,16 +10,18 @@ const commentTemplate = document.querySelector('#comment').content.querySelector
 /*const closeModalWindow = () => {
   modalWindowElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
-  document.removeEventListener('keydown', clickHandlerByEsc);
+  document.removeEventListener('keydown', onModalEscKeydown);
 };*/
 
-const clickHandlerByEsc = (e) => {
-  if (e.key === 'Escape') {
+
+const onModalEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
     //closeModalWindow();
 
     modalWindowElement.classList.add('hidden');
     bodyElement.classList.remove('modal-open');
-    document.removeEventListener('keydown', clickHandlerByEsc);
+    document.removeEventListener('keydown', onModalEscKeydown);
   }
 };
 
@@ -26,7 +30,7 @@ buttonCloseElement.addEventListener('click', () => {
 
   modalWindowElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
-  document.removeEventListener('keydown', clickHandlerByEsc);
+  document.removeEventListener('keydown', onModalEscKeydown);
 });
 
 
@@ -65,7 +69,7 @@ const addThumbnailClickHandler = (thumbnail, element) => {
     createListComments(element.comments);
     modalWindowElement.querySelector('.social__caption').textContent = element.description;
 
-    document.addEventListener('keydown', clickHandlerByEsc);
+    document.addEventListener('keydown', onModalEscKeydown);
   });
 };
 
