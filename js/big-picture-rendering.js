@@ -1,60 +1,52 @@
 import {isEscapeKey} from './util.js';
 
+
 const bodyElement = document.querySelector('body');
 const modalWindowElement = document.querySelector('.big-picture');
 const listElement = modalWindowElement.querySelector('.social__comments');
 const buttonCloseElement = modalWindowElement.querySelector('#picture-cancel');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 
-// закрытие модального окна
-/*const closeModalWindow = () => {
+
+const closeModalWindow = () => {
   modalWindowElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
-  document.removeEventListener('keydown', onModalEscKeydown);
-};*/
+};
 
 
 const onModalEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    //closeModalWindow();
-
-    modalWindowElement.classList.add('hidden');
-    bodyElement.classList.remove('modal-open');
+    closeModalWindow();
     document.removeEventListener('keydown', onModalEscKeydown);
   }
 };
 
-buttonCloseElement.addEventListener('click', () => {
-  //closeModalWindow();
 
-  modalWindowElement.classList.add('hidden');
-  bodyElement.classList.remove('modal-open');
+buttonCloseElement.addEventListener('click', () => {
+  closeModalWindow();
   document.removeEventListener('keydown', onModalEscKeydown);
 });
 
 
-// создание списка комментариев
 const createListComments = (comments) => {
-  while (listElement.firstChild) {
-    listElement.removeChild(listElement.firstChild);
-  }
+  listElement.textContent = '';
 
-  const itemCommentList = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
 
-  // создание списка новых комментариев
   comments.forEach(({avatar, name, message}) => {
     const element = commentTemplate.cloneNode(true);
     element.querySelector('.social__picture').src = avatar;
     element.querySelector('.social__picture').alt = name;
     element.querySelector('.social__text').textContent = message;
-    itemCommentList.appendChild(element);
+    fragment.appendChild(element);
   });
 
-  listElement.appendChild(itemCommentList);
+  listElement.appendChild(fragment);
 };
 
-const addThumbnailClickHandler = (thumbnail, element) => {
+
+const addThumbnailClickHandler = (thumbnail, data) => {
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
 
@@ -63,14 +55,15 @@ const addThumbnailClickHandler = (thumbnail, element) => {
     modalWindowElement.querySelector('.comments-loader').classList.add('hidden');
     bodyElement.classList.add('modal-open');
 
-    modalWindowElement.querySelector('.big-picture__img').children[0].src = element.url;
-    modalWindowElement.querySelector('.likes-count').textContent = element.likes;
-    modalWindowElement.querySelector('.comments-count').textContent = element.comments.length;
-    createListComments(element.comments);
-    modalWindowElement.querySelector('.social__caption').textContent = element.description;
+    modalWindowElement.querySelector('.big-picture__img:first-child').src = data.url;
+    modalWindowElement.querySelector('.likes-count').textContent = data.likes;
+    modalWindowElement.querySelector('.comments-count').textContent = data.comments.length;
+    createListComments(data.comments);
+    modalWindowElement.querySelector('.social__caption').textContent = data.description;
 
     document.addEventListener('keydown', onModalEscKeydown);
   });
 };
+
 
 export {addThumbnailClickHandler};
