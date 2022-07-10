@@ -1,7 +1,6 @@
-// проверяет длину строки
 const checkStringLength = (value, maxLength) => value.length <= maxLength;
 
-// получает случайное целое положительное число из диапазона
+
 const getRandomPositiveInteger = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -9,10 +8,10 @@ const getRandomPositiveInteger = (a, b) => {
   return Math.floor(result);
 };
 
-// получает случайный элемент массива
+
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-// получает случайное уникальное число из диапазона
+
 const createRandomIdFromRangeGenerator = (minNumber, maxNumber) => {
   const excludeNumbers = [];
   return () => {
@@ -28,4 +27,8 @@ const createRandomIdFromRangeGenerator = (minNumber, maxNumber) => {
   };
 };
 
-export {checkStringLength, getRandomPositiveInteger, getRandomArrayElement, createRandomIdFromRangeGenerator};
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+
+export {checkStringLength, getRandomPositiveInteger, getRandomArrayElement, createRandomIdFromRangeGenerator, isEscapeKey};

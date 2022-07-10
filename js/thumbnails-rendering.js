@@ -1,5 +1,6 @@
 import {addThumbnailClickHandler} from './big-picture-rendering.js';
 
+
 const renderThumbnails = (data) => {
   const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const fragment = document.createDocumentFragment();
@@ -18,5 +19,6 @@ const renderThumbnails = (data) => {
 
   document.querySelector('.pictures').appendChild(fragment);
 };
+
 
 export {renderThumbnails};
