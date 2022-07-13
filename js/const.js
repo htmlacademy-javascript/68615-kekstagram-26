@@ -6,6 +6,11 @@ export const MIN_LIKES_COUNT = 15;
 export const MAX_LIKES_COUNT = 200;
 export const MIN_AVATARS_COUNT = 1;
 export const MAX_AVATARS_COUNT = 6;
+export const MAX_HASHTAG_QTY = 5;
+export const MAX_HASHTAG_LENGTH = 20;
+export const MAX_COMMENT_LENGTH = 140;
+export const HASHTAG_REG_EXP = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+export const HASHTAG_DELIMITER = ' ';
 export const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
