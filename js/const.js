@@ -1,7 +1,7 @@
 export const PHOTOS_COUNT = 25;
-export const MAX_COMMENTS_COUNT = 3;
+export const MAX_COMMENTS_COUNT = 12;
 export const MIN_RANGE_RANDOM_ID_COMMENT = 1;
-export const MAX_RANGE_RANDOM_ID_COMMENT = 1000;
+export const MAX_RANGE_RANDOM_ID_COMMENT = 10000;
 export const MIN_LIKES_COUNT = 15;
 export const MAX_LIKES_COUNT = 200;
 export const MIN_AVATARS_COUNT = 1;
@@ -11,6 +11,7 @@ export const MAX_HASHTAG_LENGTH = 20;
 export const MAX_COMMENT_LENGTH = 140;
 export const HASHTAG_REG_EXP = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 export const HASHTAG_DELIMITER = ' ';
+export const COMMENTS_QTY_IN_PORTION = 5;
 export const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
