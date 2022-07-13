@@ -1,10 +1,13 @@
 import {isEscapeKey, openPopup, closePopup} from './util.js';
+import {COMMENTS_QTY_IN_PORTION} from './const.js';
 
 
 const modalWindowElement = document.querySelector('.big-picture');
 const listElement = modalWindowElement.querySelector('.social__comments');
 const buttonCloseElement = modalWindowElement.querySelector('#picture-cancel');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+const commentsCountElement = modalWindowElement.querySelector('.loaded-comments-count');
+const commentsLoaderElement = modalWindowElement.querySelector('.comments-loader');
 
 
 const closeModalWindow = () => {
@@ -27,9 +30,7 @@ buttonCloseElement.addEventListener('click', () => {
 });
 
 
-const createListComments = (comments) => {
-  listElement.textContent = '';
-
+const addCommentsList = (comments) => {
   const fragment = document.createDocumentFragment();
 
   comments.forEach(({avatar, name, message}) => {
@@ -44,23 +45,47 @@ const createListComments = (comments) => {
 };
 
 
+const paginateCommentsListGenerator = (comments) => {
+  let pageNumber = 0;
+  const pagesQty = Math.ceil(comments.length / COMMENTS_QTY_IN_PORTION);
+
+  return () => {
+    const start = pageNumber * COMMENTS_QTY_IN_PORTION;
+    const end = (pageNumber + 1) * COMMENTS_QTY_IN_PORTION;
+    addCommentsList(comments.slice(start, end));
+    pageNumber++;
+
+    commentsCountElement.textContent = (pageNumber === pagesQty) ? comments.length : end;
+
+    if (pageNumber === pagesQty) {
+      commentsLoaderElement.classList.add('hidden');
+    }
+  };
+};
+
 const addThumbnailClickHandler = (thumbnail, data) => {
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
 
-    //modalWindowElement.querySelector('.social__comment-count').classList.add('hidden');
-    //modalWindowElement.querySelector('.comments-loader').classList.add('hidden');
     openPopup(modalWindowElement);
 
+    listElement.textContent = '';
+    commentsLoaderElement.classList.remove('hidden');
     modalWindowElement.querySelector('.big-picture__img img').src = data.url;
     modalWindowElement.querySelector('.likes-count').textContent = data.likes;
     modalWindowElement.querySelector('.comments-count').textContent = data.comments.length;
-    createListComments(data.comments);
     modalWindowElement.querySelector('.social__caption').textContent = data.description;
+
+    const paginateCommentsList = paginateCommentsListGenerator(data.comments);
+    paginateCommentsList();
+
+    commentsLoaderElement.addEventListener('click', (loaderEvt) => {
+      loaderEvt.preventDefault();
+      paginateCommentsList();
+    });
 
     document.addEventListener('keydown', onModalEscKeydown);
   });
 };
-
 
 export {addThumbnailClickHandler};
