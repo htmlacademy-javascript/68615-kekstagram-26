@@ -16,55 +16,55 @@ const pristine = new Pristine(uploadFormElement, {
 }, false);
 
 
-const prepareHashtags = (value) => {
-  const clearedValue = value.trim().replace(/ +/g, ' ');
-  return (clearedValue.length) ? clearedValue.split(HASHTAG_DELIMITER) : [];
-};
-
+const prepareHashtags = (value) => value.trim().split(HASHTAG_DELIMITER).filter((hashtag) => hashtag.length > 0);
 
 const validateHashtagsQty = (value) => prepareHashtags(value).length <= MAX_HASHTAG_QTY;
 
 const validateHashtagsUniqueness = (value) => {
   const hashtags = prepareHashtags(value);
-  let isUnique = true;
-
   const uniqueHashtags = [];
-  hashtags.forEach((hashtag) => {
-    const preparedHashtag = hashtag.toLowerCase();
+
+  for (let i = 0; i < hashtags.length; i++) {
+    const preparedHashtag = hashtags[i].toLowerCase();
     if (uniqueHashtags.includes(preparedHashtag)) {
-      isUnique = false;
+      return false;
     } else {
       uniqueHashtags.push(preparedHashtag);
     }
-  });
+  }
 
-  return isUnique;
+  return true;
 };
 
 const validateHashtagsByRegExp = (value) => {
   const hashtags = prepareHashtags(value);
-  let isCorrect = true;
 
-  hashtags.forEach((hashtag) => {
-    if (!HASHTAG_REG_EXP.test(hashtag)) {
-      isCorrect = false;
+  for (let i = 0; i < hashtags.length; i++) {
+    if (!HASHTAG_REG_EXP.test(hashtags[i])) {
+      return false;
     }
-  });
-  return isCorrect;
+  }
+
+  return true;
 };
-
-pristine.addValidator(hashtagsFieldElement, validateHashtagsQty, `Максимально допустимое количество хештегов - ${MAX_HASHTAG_QTY}`);
-pristine.addValidator(hashtagsFieldElement, validateHashtagsUniqueness, 'Все хештеги должны быть уникальными');
-pristine.addValidator(hashtagsFieldElement, validateHashtagsByRegExp, `Каждый хештег должен начинаться с #, состоять из букв и цифр, максимальное количество символов - ${MAX_HASHTAG_LENGTH}`);
-
 
 const validateDescription = (value) => value.length <= MAX_COMMENT_LENGTH;
 
-pristine.addValidator(descriptionFieldElement, validateDescription, `Максимально допустимое количество символов - ${MAX_COMMENT_LENGTH}`);
+
+const addUploadFormValidators = () => {
+  pristine.addValidator(hashtagsFieldElement, validateHashtagsQty, `Максимально допустимое количество хештегов - ${MAX_HASHTAG_QTY}`);
+  pristine.addValidator(hashtagsFieldElement, validateHashtagsUniqueness, 'Все хештеги должны быть уникальными');
+  pristine.addValidator(hashtagsFieldElement, validateHashtagsByRegExp, `Каждый хештег должен начинаться с #, состоять из букв и цифр, максимальное количество символов - ${MAX_HASHTAG_LENGTH}`);
+  pristine.addValidator(descriptionFieldElement, validateDescription, `Максимально допустимое количество символов - ${MAX_COMMENT_LENGTH}`);
+};
+
+const addUploadFormEventListeners = () => {
+  uploadFormElement.addEventListener('submit', (evt) => {
+    if (!pristine.validate()) {
+      evt.preventDefault();
+    }
+  });
+};
 
 
-uploadFormElement.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
-  }
-});
+export {addUploadFormValidators, addUploadFormEventListeners};

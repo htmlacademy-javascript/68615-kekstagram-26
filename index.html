@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="nouislider/nouislider.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кекстаграм</title>
 </head>
@@ -46,18 +47,18 @@
                   <!-- Изменение размера изображения -->
                   <fieldset class="img-upload__scale  scale">
                     <button type="button" class="scale__control  scale__control--smaller">Уменьшить</button>
-                    <input type="text" class="scale__control  scale__control--value" value="55%" title="Image Scale" name="scale" readonly>
+                    <input type="text" class="scale__control  scale__control--value" value="100%" title="Image Scale" name="scale" readonly>
                     <button type="button" class="scale__control  scale__control--bigger">Увеличить</button>
                   </fieldset>
 
                   <!-- Предварительный просмотр изображения -->
                   <div class="img-upload__preview">
-                    <img src="img/upload-default-image.jpg" alt="Предварительный просмотр фотографии">
+                    <img id="img-upload__preview-image" src="img/upload-default-image.jpg" alt="Предварительный просмотр фотографии">
                   </div>
 
                   <!-- Изменение глубины эффекта, накладываемого на изображение -->
-                  <fieldset class="img-upload__effect-level  effect-level">
-                    <input type="number" class="effect-level__value" step="any" name="effect-level" value="">
+                  <fieldset class="img-upload__effect-level effect-level hidden">
+                    <input class="effect-level__value" step="any" name="effect-level" value="">
                     <div class="effect-level__slider"></div>
                   </fieldset>
 
@@ -68,8 +69,8 @@
                 <!-- Наложение эффекта на изображение -->
                 <fieldset class="img-upload__effects  effects">
                   <ul class="effects__list">
-                    <li class="effects__item">
-                      <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-none" value="none" checked>
+                    <li class="effects__item effects__item--none">
+                      <input type="radio" class="effects__radio  visually-hidden effects__radio--none" name="effect" id="effect-none" value="none" checked>
                       <label for="effect-none" class="effects__label">
                         <span class="effects__preview  effects__preview--none">Превью фото без эффекта</span>
                         Оригинал
@@ -142,7 +143,7 @@
 
         <!-- Просмотр изображения -->
         <div class="big-picture__img">
-          <img src="img/logo-background-3.jpg" alt="Девушка в купальнике" width="600" height="600">
+          <img class="big-picture__original" src="img/logo-background-3.jpg" alt="Девушка в купальнике" width="600" height="600">
         </div>
 
         <!-- Информация об изображении. Подпись, комментарии, количество лайков -->
@@ -242,6 +243,7 @@
 
   <script src="js/main.js" type="module"></script>
   <script src="pristine/pristine.min.js"></script>
+  <script src="nouislider/nouislider.js"></script>
 
 </body>
 </html>
