@@ -1,4 +1,6 @@
 import {isEscapeKey, openPopup, closePopup, stopPropogationOnEscapeKeydown} from './util.js';
+import {DEFAULT_SCALE_VALUE}  from './const.js';
+import {changeScaleValue} from './scale-control.js';
 
 
 const picturesElement = document.querySelector('.pictures');
@@ -6,26 +8,23 @@ const imgUploadFormElement = picturesElement.querySelector('.img-upload__form');
 const imgUploadInputElement = picturesElement.querySelector('.img-upload__input');
 const imgUploadOverlayElement = picturesElement.querySelector('.img-upload__overlay');
 const imgUploadCancelElement = picturesElement.querySelector('.img-upload__cancel');
-const scaleControlElement = picturesElement.querySelector('.scale__control--value');
 const hashtagsElement = picturesElement.querySelector('.text__hashtags');
 const descriptionElement = picturesElement.querySelector('.text__description');
-
-
-hashtagsElement.addEventListener('keydown', (evt) => {
-  stopPropogationOnEscapeKeydown(evt);
-});
-
-descriptionElement.addEventListener('keydown', (evt) => {
-  stopPropogationOnEscapeKeydown(evt);
-});
-
+const imgUploadPreviewElement = document.getElementById('img-upload__preview-image');
+const imgUploadEffectLevelElement = document.querySelector('.img-upload__effect-level');
+const effectsRadioNoneElement = imgUploadFormElement.querySelector('.effects__radio--none');
+const effectLevelValueElement = imgUploadEffectLevelElement.querySelector('.effect-level__value');
 
 const clearImgUploadForm = () => {
   imgUploadInputElement.value = '';
-  scaleControlElement.value = '100%';
+  changeScaleValue(DEFAULT_SCALE_VALUE);
   hashtagsElement.value = '';
   descriptionElement.value = '';
-  imgUploadFormElement.querySelector('input[name=\'effect\'][value=\'none\']').checked = true;
+  imgUploadPreviewElement.className = '';
+  imgUploadPreviewElement.style.filter = '';
+  effectsRadioNoneElement.checked = true;
+  imgUploadEffectLevelElement.classList.add('hidden');
+  effectLevelValueElement.value = '';
 };
 
 
@@ -47,13 +46,25 @@ const onPopupEscKeydown = (evt) => {
   }
 };
 
+const addDownloadImagePopupEventListeners = () => {
+  hashtagsElement.addEventListener('keydown', (evt) => {
+    stopPropogationOnEscapeKeydown(evt);
+  });
 
-imgUploadCancelElement.addEventListener('click', () => {
-  closeImgUploadPopup();
-  document.removeEventListener('keydown', onPopupEscKeydown);
-});
+  descriptionElement.addEventListener('keydown', (evt) => {
+    stopPropogationOnEscapeKeydown(evt);
+  });
 
-imgUploadInputElement.addEventListener('change', () => {
-  document.addEventListener('keydown', onPopupEscKeydown);
-  openImgUploadPopup();
-});
+  imgUploadCancelElement.addEventListener('click', () => {
+    closeImgUploadPopup();
+    document.removeEventListener('keydown', onPopupEscKeydown);
+  });
+
+  imgUploadInputElement.addEventListener('change', () => {
+    document.addEventListener('keydown', onPopupEscKeydown);
+    openImgUploadPopup();
+  });
+};
+
+
+export {addDownloadImagePopupEventListeners, imgUploadEffectLevelElement, imgUploadPreviewElement, effectsRadioNoneElement, effectLevelValueElement};

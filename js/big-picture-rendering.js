@@ -23,14 +23,15 @@ const onModalEscKeydown = (evt) => {
   }
 };
 
+const addBigPicturePopupEventListeners = () => {
+  buttonCloseElement.addEventListener('click', () => {
+    closeModalWindow();
+    document.removeEventListener('keydown', onModalEscKeydown);
+  });
+};
 
-buttonCloseElement.addEventListener('click', () => {
-  closeModalWindow();
-  document.removeEventListener('keydown', onModalEscKeydown);
-});
 
-
-const addCommentsList = (comments) => {
+const renderCommentsList = (comments) => {
   const fragment = document.createDocumentFragment();
 
   comments.forEach(({avatar, name, message}) => {
@@ -52,7 +53,7 @@ const paginateCommentsListGenerator = (comments) => {
   return () => {
     const start = pageNumber * COMMENTS_QTY_IN_PORTION;
     const end = (pageNumber + 1) * COMMENTS_QTY_IN_PORTION;
-    addCommentsList(comments.slice(start, end));
+    renderCommentsList(comments.slice(start, end));
     pageNumber++;
 
     commentsCountElement.textContent = (pageNumber === pagesQty) ? comments.length : end;
@@ -71,7 +72,7 @@ const addThumbnailClickHandler = (thumbnail, data) => {
 
     listElement.textContent = '';
     commentsLoaderElement.classList.remove('hidden');
-    modalWindowElement.querySelector('.big-picture__img img').src = data.url;
+    modalWindowElement.querySelector('.big-picture__original').src = data.url;
     modalWindowElement.querySelector('.likes-count').textContent = data.likes;
     modalWindowElement.querySelector('.comments-count').textContent = data.comments.length;
     modalWindowElement.querySelector('.social__caption').textContent = data.description;
@@ -88,4 +89,4 @@ const addThumbnailClickHandler = (thumbnail, data) => {
   });
 };
 
-export {addThumbnailClickHandler};
+export {addThumbnailClickHandler, addBigPicturePopupEventListeners};
