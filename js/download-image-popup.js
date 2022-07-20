@@ -46,6 +46,13 @@ const onPopupEscKeydown = (evt) => {
   }
 };
 
+
+const closeAndClearImgUploadPopup = () => {
+  closeImgUploadPopup();
+  document.removeEventListener('keydown', onPopupEscKeydown);
+};
+
+
 const addDownloadImagePopupEventListeners = () => {
   hashtagsElement.addEventListener('keydown', (evt) => {
     stopPropogationOnEscapeKeydown(evt);
@@ -56,8 +63,7 @@ const addDownloadImagePopupEventListeners = () => {
   });
 
   imgUploadCancelElement.addEventListener('click', () => {
-    closeImgUploadPopup();
-    document.removeEventListener('keydown', onPopupEscKeydown);
+    closeAndClearImgUploadPopup();
   });
 
   imgUploadInputElement.addEventListener('change', () => {
@@ -67,4 +73,4 @@ const addDownloadImagePopupEventListeners = () => {
 };
 
 
-export {addDownloadImagePopupEventListeners, imgUploadEffectLevelElement, imgUploadPreviewElement, effectsRadioNoneElement, effectLevelValueElement};
+export {addDownloadImagePopupEventListeners, imgUploadEffectLevelElement, imgUploadPreviewElement, effectsRadioNoneElement, effectLevelValueElement, closeAndClearImgUploadPopup, onPopupEscKeydown};
