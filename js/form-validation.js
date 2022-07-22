@@ -8,8 +8,8 @@ const uploadFormElement = document.querySelector('.img-upload__form');
 const hashtagsFieldElement = uploadFormElement.querySelector('.text__hashtags');
 const descriptionFieldElement = uploadFormElement.querySelector('.text__description');
 const imgUploadSubmitElement = uploadFormElement.querySelector('.img-upload__submit');
-const successPopupTemplate = document.querySelector('#success').content.querySelector('.success');
-const errorPopupTemplate = document.querySelector('#error').content.querySelector('.error');
+const successPopupElement = document.querySelector('#success').content.querySelector('.success');
+const errorPopupElement = document.querySelector('#error').content.querySelector('.error');
 
 
 const pristine = new Pristine(uploadFormElement, {
@@ -67,7 +67,7 @@ const addUploadFormValidators = () => {
 
 const showSuccessPopup = () => {
   const fragment = document.createDocumentFragment();
-  const element = successPopupTemplate.cloneNode(true);
+  const element = successPopupElement.cloneNode(true);
   fragment.appendChild(element);
   bodyElement.appendChild(fragment);
 
@@ -116,7 +116,7 @@ const showSuccessPopup = () => {
 
 const showErrorPopup = () => {
   const fragment = document.createDocumentFragment();
-  const element = errorPopupTemplate.cloneNode(true);
+  const element = errorPopupElement.cloneNode(true);
   fragment.appendChild(element);
   bodyElement.appendChild(fragment);
   document.removeEventListener('keydown', onPopupEscKeydown);
@@ -179,9 +179,8 @@ const unblockButton = () => {
 const addUploadFormEventListeners = () => {
   uploadFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const isValid = pristine.validate();
 
-    if (isValid) {
+    if (pristine.validate()) {
       blockButton();
 
       sendData(
