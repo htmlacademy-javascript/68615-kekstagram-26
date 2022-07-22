@@ -1,6 +1,7 @@
 import {isEscapeKey, openPopup, closePopup, stopPropogationOnEscapeKeydown} from './util.js';
-import {DEFAULT_SCALE_VALUE}  from './const.js';
+import {DEFAULT_SCALE_VALUE, DOWNLOAD_FILE_TYPES}  from './const.js';
 import {changeScaleValue} from './scale-control.js';
+import {pristine} from './form-validation.js';
 
 
 const picturesElement = document.querySelector('.pictures');
@@ -10,10 +11,11 @@ const imgUploadOverlayElement = picturesElement.querySelector('.img-upload__over
 const imgUploadCancelElement = picturesElement.querySelector('.img-upload__cancel');
 const hashtagsElement = picturesElement.querySelector('.text__hashtags');
 const descriptionElement = picturesElement.querySelector('.text__description');
-const imgUploadPreviewElement = document.getElementById('img-upload__preview-image');
+const imgUploadPreviewElement = document.querySelector('#img-upload__preview-image');
 const imgUploadEffectLevelElement = document.querySelector('.img-upload__effect-level');
 const effectsRadioNoneElement = imgUploadFormElement.querySelector('.effects__radio--none');
 const effectLevelValueElement = imgUploadEffectLevelElement.querySelector('.effect-level__value');
+const effectsPreviewElements = imgUploadOverlayElement.querySelectorAll('.effects__preview');
 
 const clearImgUploadForm = () => {
   imgUploadInputElement.value = '';
@@ -25,10 +27,21 @@ const clearImgUploadForm = () => {
   effectsRadioNoneElement.checked = true;
   imgUploadEffectLevelElement.classList.add('hidden');
   effectLevelValueElement.value = '';
+  pristine.reset();
 };
 
 
 const openImgUploadPopup = () => {
+  const downloadFile = imgUploadInputElement.files[0];
+  const downloadFileName = downloadFile.name.toLowerCase();
+
+  if (DOWNLOAD_FILE_TYPES.some((fileType) => downloadFileName.endsWith(fileType))) {
+    imgUploadPreviewElement.src = URL.createObjectURL(downloadFile);
+    effectsPreviewElements.forEach((effect) => {
+      effect.style.backgroundImage = `url(${imgUploadPreviewElement.src})`;
+    });
+  }
+
   openPopup(imgUploadOverlayElement);
 };
 
