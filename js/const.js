@@ -12,6 +12,7 @@ export const API_URL = 'https://26.javascript.pages.academy/kekstagram';
 export const ALERT_SHOW_TIME = 5000;
 export const RANDOM_PHOTOS_QTY = 10;
 export const RERENDER_DELAY = 500;
+export const DOWNLOAD_FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 export const PICTURE_EFFECTS = {
   'chrome': {
     min: 0,

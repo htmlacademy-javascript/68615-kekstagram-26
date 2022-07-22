@@ -201,4 +201,4 @@ const addUploadFormEventListeners = () => {
 };
 
 
-export {addUploadFormValidators, addUploadFormEventListeners};
+export {addUploadFormValidators, addUploadFormEventListeners, pristine};
