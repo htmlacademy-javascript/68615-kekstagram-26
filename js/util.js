@@ -39,5 +39,22 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
-export {bodyElement, checkStringLength, isEscapeKey, openPopup, closePopup, stopPropogationOnEscapeKeydown, showAlert};
+const getRandomUniqueIntegerArray = (min, max, length) => {
+  const set = new Set();
+  const count = Math.abs(Math.abs(max) - Math.abs(min)) + 1;
+
+  while (set.size < count) {
+    set.add(getRandomInt(min, max));
+  }
+
+  return Array.from(set).slice(0, length);
+};
+
+
+export {bodyElement, checkStringLength, isEscapeKey, openPopup, closePopup, stopPropogationOnEscapeKeydown, showAlert, getRandomUniqueIntegerArray};

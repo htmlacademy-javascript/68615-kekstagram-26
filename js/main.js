@@ -6,9 +6,11 @@ import {addUploadFormValidators, addUploadFormEventListeners} from './form-valid
 import {addScaleControlEventListeners} from './scale-control.js';
 import {addPictureEffectsEventListeners, addSlider} from './picture-effects-control.js';
 import {showAlert} from './util.js';
+import {addFilter} from './filters.js';
 
 getData((photosData) => {
   renderThumbnails(photosData);
+  addFilter(photosData);
 }, showAlert);
 
 addBigPicturePopupEventListeners();
